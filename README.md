@@ -13,6 +13,14 @@ An example app built with [IDX](https://idx.xyz/).
 
 
 ### Instructions
+Install dependencies:
+```sh
+npm ci
+```
+Start the development server:
+```sh
+npm start
+```
 
 Install Ceramic and IDX:
 
