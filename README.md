@@ -35,7 +35,7 @@ idx did:create --label=local
 Publish the schema (can be found below):
 
 ```sh
-dx schema:publish local '{"$schema":"http://json-schema.org/draft-07/schema#"...'
+idx schema:publish local '{"$schema":"http://json-schema.org/draft-07/schema#"...'
 ```
 
 Create the definition:
@@ -44,7 +44,7 @@ Create the definition:
 idx definition:create local --schema=<schema-url-from-above> --name="Secret Notes" --description="Seret notes for myself and others"
 ```
 
-Open the `src/app.ts` file and edit the variable `SECRET_NOTES_DEFINITION ` to the DocID returned by the previous command.
+Open the `src/idx.ts` file and edit the aliases variable `secretNotes ` to the DocID returned by the previous command.
 
 ### Schema used by this app
 
@@ -87,6 +87,8 @@ Open the `src/app.ts` file and edit the variable `SECRET_NOTES_DEFINITION ` to t
   }
 }
 ```
+
+
 
 
 
