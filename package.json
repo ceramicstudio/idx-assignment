@@ -1,16 +1,17 @@
 {
-  "name": "web-playground",
+  "name": "eth-denver-2021",
   "version": "1.0.0",
-  "description": "Ceramic Web playground",
+  "description": "Example IDX app",
   "author": "Ceramic Studio",
   "license": "(Apache-2.0 OR MIT)",
-  "homepage": "https://github.com/ceramicstudio/web-playground#readme",
+  "homepage": "https://github.com/ceramicstudio/eth-denver-2021#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ceramicstudio/web-playground.git"
+    "url": "git+https://github.com/ceramicstudio/eth-denver-2021.git"
   },
   "scripts": {
     "build": "webpack",
+    "start": "webpack-dev-server",
     "lint": "eslint src"
   },
   "dependencies": {
@@ -33,10 +34,12 @@
     "did-jwt": "^4.7.0",
     "eslint": "^7.14.0",
     "eslint-config-3box": "^0.2.0",
+    "http-server": "^0.12.3",
     "prettier": "^2.2.1",
     "ts-loader": "^8.0.11",
     "typescript": "^4.1.2",
     "webpack": "^4.0.0",
-    "webpack-cli": "^3.0.0"
+    "webpack-cli": "^3.0.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }

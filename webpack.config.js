@@ -1,10 +1,9 @@
 const path = require('path')
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: {
-    app: './src/app.ts',
-    skydb: './src/skydb.ts',
+    app: './src/app.ts'
   },
   output: {
     filename: '[name].js',
@@ -23,6 +22,9 @@ module.exports = {
         exclude: /node_modules/,
       },
     ],
+  },
+  devServer: {
+    writeToDisk: true,
   },
   node: {
     console: false,
