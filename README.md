@@ -31,7 +31,7 @@ npm install -g @ceramicnetwork/cli @ceramicstudio/idx-cli
 Run the Ceramic daemon:
 
 ```sh
-ceramic deamon
+ceramic daemon
 ```
 
 Create a developer DID used to author the schema and definition:
