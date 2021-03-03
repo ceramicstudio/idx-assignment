@@ -1,6 +1,5 @@
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import { ThreeIdConnect, EthereumAuthProvider } from '3id-connect'
-import Authereum from 'authereum'
 import type { DIDProvider } from 'dids'
 import Fortmatic from 'fortmatic'
 import Web3Modal from 'web3modal'
@@ -23,10 +22,6 @@ export const web3Modal = new Web3Modal({
       options: {
         key: 'pk_live_EC842EEAC7F08995',
       },
-    },
-    authereum: {
-      package: Authereum,
-      options: {},
     },
   },
 })

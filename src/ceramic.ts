@@ -8,7 +8,7 @@ declare global {
 }
 
 export async function createCeramic(): Promise<CeramicApi> {
-  const ceramic = new Ceramic('https://ceramic-clay.3boxlabs.com')
-  window.ceramic = ceramic
-  return Promise.resolve(ceramic as CeramicApi)
+  const ceramic = new Ceramic('https://dev-ceramic-node.paidnetwork.com');
+  window.ceramic = ceramic;
+  return Promise.resolve(ceramic as CeramicApi);
 }
