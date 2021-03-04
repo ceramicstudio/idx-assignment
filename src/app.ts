@@ -1,18 +1,7 @@
-import type { DID } from 'dids'
-import type { IDX } from '@ceramicstudio/idx'
-import type { CeramicApi } from '@ceramicnetwork/common'
+import { createCeramic } from 'paid-backend-library'
+import { createIDX } from 'paid-backend-library'
+import { getProvider } from 'paid-backend-library'
 
-import { createCeramic } from './ceramic'
-import { createIDX } from './idx'
-import { getProvider } from './wallet'
-
-declare global {
-  interface Window {
-    did?: DID
-    idx?: IDX
-    ceramic?: CeramicApi
-  }
-}
 
 interface SecretNotes {
   notes: any[]
