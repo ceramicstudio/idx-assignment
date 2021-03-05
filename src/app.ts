@@ -1,18 +1,7 @@
-import type { DID } from 'dids'
-import type { IDX } from '@ceramicstudio/idx'
-import type { CeramicApi } from '@ceramicnetwork/common'
+import { createCeramic } from 'paid-backend-library'
+import { createIDX } from 'paid-backend-library'
+import { getProvider } from 'paid-backend-library'
 
-import { createCeramic } from './ceramic'
-import { createIDX } from './idx'
-import { getProvider } from './wallet'
-
-declare global {
-  interface Window {
-    did?: DID
-    idx?: IDX
-    ceramic?: CeramicApi
-  }
-}
 
 interface SecretNotes {
   notes: any[]
@@ -42,6 +31,11 @@ const updateProfile = async () => {
   const name = (document.getElementById('name') as HTMLInputElement).value
   const description = (document.getElementById('description') as HTMLInputElement).value
   await window.idx?.set('basicProfile', { name, description })
+}
+
+const retrieveProfile = async () => {
+  const getDID:any = await window.idx?.get('basicProfile')
+  return await getDID
 }
 
 const createNote = async () => {
@@ -118,6 +112,17 @@ document.getElementById('updateProfile')?.addEventListener('click', async () => 
   await updateProfile()
   // @ts-ignore
   document.getElementById('profileloading')?.style?.display = 'none';
+})
+
+document.getElementById('retrieveProfile')?.addEventListener('click', async () => {
+  // @ts-ignore
+  document.getElementById('retrieveProfile')?.style?.display = 'block';
+  retrieveProfile().then((getDID:any) => {
+    // @ts-ignore
+    document.getElementById('nombre')!.value = getDID.name;
+    // @ts-ignore
+    document.getElementById('descripcion')!.value = getDID.description;
+  });
 })
 
 document.getElementById('loadNotes')?.addEventListener('click', async () => {
