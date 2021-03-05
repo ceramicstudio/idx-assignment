@@ -57,7 +57,7 @@
         <img id="logo" src="images/paid-network-logo-300x174.png" alt="">
       </div>
       <h1>DID Test for PAID Protocol</h1>
-      <p><a href="https://idx.xyz" target="_blank">IDX</a> workshop.</p>
+      <p><a href="https://paidnetwork.com" target="_blank">PAID</a> Network.</p>
     </header>
     <div style="margin: 50px 100px;">
       <button id="bauth" type="button" class="btn btn-primary">Connect wallet</button>
@@ -74,6 +74,17 @@
         <div id="profileloading" class="spinner-grow text-primary" role="status" style="display: none">
           <span class="sr-only">Loading...</span>
         </div>
+
+      </div>
+      <h3>Retrieve Profile</h3>
+      <div id="retrieveProfile" style="margin-left: 50px; margin-right: auto; margin-bottom: 30px">
+        <input type="text" id="name" name="name" placeholder="Name" />
+        <input type="text" id="description" name="description" placeholder="Description" />
+        <button id="retrieveProfile" type="button" class="btn btn-primary">Profile</button><br />
+        <div id="loadloading" class="spinner-grow text-primary" role="status" style="display: none">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <span id="allNotes"></span>
       </div>
       
     </main>
