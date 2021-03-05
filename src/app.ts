@@ -35,11 +35,7 @@ const updateProfile = async () => {
 
 const retrieveProfile = async () => {
   const getDID:any = await window.idx?.get('basicProfile')
-  //const name = getDID.name
-  //const description = getDID.description
   return await getDID
-
-
 }
 
 const createNote = async () => {
@@ -121,16 +117,12 @@ document.getElementById('updateProfile')?.addEventListener('click', async () => 
 document.getElementById('retrieveProfile')?.addEventListener('click', async () => {
   // @ts-ignore
   document.getElementById('retrieveProfile')?.style?.display = 'block';
-  const getDID = await retrieveProfile();
-
-  
-  // @ts-ignore
-  //document.getElementById('retrieveProfile').val
-
-  document.getElementById('name')!.innerText = getDID.name;
-
-  document.getElementById('description')!.innerText = getDID.description;
-
+  retrieveProfile().then((getDID:any) => {
+    // @ts-ignore
+    document.getElementById('nombre')!.value = getDID.name;
+    // @ts-ignore
+    document.getElementById('descripcion')!.value = getDID.description;
+  });
 })
 
 document.getElementById('loadNotes')?.addEventListener('click', async () => {
