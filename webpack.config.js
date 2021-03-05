@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -20,6 +21,17 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
+      },
+      {
+        test: /\.js$/,
+        exclude: [
+          /^.*content-hash\/.*$/,
+        ],
+        loader: 'string-replace-loader',
+        options: {
+          search: 'multicodec/src/base-table.json',
+          replace: 'multicodec/src/base-table.js',
+        }
       },
     ],
   },
