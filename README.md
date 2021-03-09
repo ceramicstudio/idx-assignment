@@ -2,6 +2,8 @@
 
 An example app built with [IDX](https://idx.xyz/).
 
+[**> Video walkthrough <**](https://www.youtube.com/watch?v=-kT_jMGCVR4)
+
 ## Technologies
 
 - [Ceramic HTTP Client](https://developers.ceramic.network/reference/javascript/clients/#http-client): Provides access to the Ceramic Network via a remote node running Ceramic (and IPFS).
