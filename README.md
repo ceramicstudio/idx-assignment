@@ -1,4 +1,4 @@
-# [EthDenver 2021 workshop](https://ceramicstudio.github.io/eth-denver-2021/)
+# [IDX assignment](https://ceramicstudio.github.io/idx-assignment/)
 
 An example app built with [IDX](https://idx.xyz/).
 
