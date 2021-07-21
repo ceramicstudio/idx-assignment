@@ -1,6 +1,8 @@
-import type { DID } from 'dids'
+import { DID } from 'dids'
 import type { IDX } from '@ceramicstudio/idx'
 import type { CeramicApi } from '@ceramicnetwork/common'
+import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
+import KeyDidResolver from 'key-did-resolver'
 
 import { createCeramic } from './ceramic'
 import { createIDX } from './idx'
@@ -15,16 +17,21 @@ declare global {
 }
 
 interface SecretNotes {
-  notes: any[]
+  notes: Array<any>
 }
 
 const ceramicPromise = createCeramic()
 
 const authenticate = async (): Promise<string> => {
   const [ceramic, provider] = await Promise.all([ceramicPromise, getProvider()])
-  await ceramic.setDIDProvider(provider)
+  const did = new DID({
+    provider,
+    resolver: { ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(ceramic) },
+  })
+  await did.authenticate()
+  window.did = did
+  ceramic.did = did
   const idx = createIDX(ceramic)
-  window.did = ceramic.did
   return idx.id
 }
 
@@ -32,8 +39,8 @@ const ethAddressToDID = async (address: string): Promise<string> => {
   const caip10Doc = await window.ceramic?.createDocument('caip10-link', {
     metadata: {
       family: 'caip10-link',
-      controllers: [address.toLowerCase() + '@eip155:1']
-    }
+      controllers: [address.toLowerCase() + '@eip155:1'],
+    },
   })
   return caip10Doc?.content
 }
@@ -45,7 +52,7 @@ const updateProfile = async () => {
 }
 
 const createNote = async () => {
-  const record = (await window.idx?.get('secretNotes')) as SecretNotes || { notes: [] }
+  const record = ((await window.idx?.get('secretNotes')) as SecretNotes) || { notes: [] }
   const recipient = (document.getElementById('recipient') as HTMLInputElement).value
   const note = (document.getElementById('note') as HTMLInputElement).value
   const noteData = { recipient, note }
@@ -68,10 +75,14 @@ const loadNotes = async () => {
 
   record?.notes.map(async (encryptedNote, mapindex) => {
     try {
-      const { recipient, note } = await window.did?.decryptDagJWE(encryptedNote) as Record<string, any>
+      const { recipient, note } = (await window.did?.decryptDagJWE(encryptedNote)) as Record<
+        string,
+        any
+      >
       let noteEntry = '<p>'
       if (recipient) {
-        noteEntry += '<b>Recipient:</b> ' + (recipient || '--') + `<span id="name${mapindex}"></span>`
+        noteEntry +=
+          '<b>Recipient:</b> ' + (recipient || '--') + `<span id="name${mapindex}"></span>`
         addNameToNote(recipient, 'name' + mapindex)
       }
       noteEntry += '<br /><b>Note:</b> ' + note + '</p><hr />'
@@ -82,7 +93,7 @@ const loadNotes = async () => {
 }
 
 const addNameToNote = async (recipient: string, elemId: string): Promise<void> => {
-  const { name } = await window.idx?.get('basicProfile', recipient) as any || {}
+  const { name } = ((await window.idx?.get('basicProfile', recipient)) as any) || {}
   if (name) {
     const nameContainer = document.getElementById(elemId)
     // @ts-ignore
@@ -92,16 +103,16 @@ const addNameToNote = async (recipient: string, elemId: string): Promise<void> =
 
 document.getElementById('bauth')?.addEventListener('click', () => {
   // @ts-ignore
-  document.getElementById('authloading')?.style?.display = 'block';
+  document.getElementById('authloading')?.style?.display = 'block'
 
   authenticate().then(
     (id) => {
       console.log('Connected with DID:', id)
       // @ts-ignore
-      document.getElementById('authloading')?.style.display = 'none';
+      document.getElementById('authloading')?.style.display = 'none'
       // @ts-ignore
-      document.getElementById('main')?.style.display = 'block';
-      (document.getElementById('bauth') as HTMLInputElement).disabled = true
+      document.getElementById('main')?.style.display = 'block'
+      ;(document.getElementById('bauth') as HTMLInputElement).disabled = true
     },
     (err) => {
       console.error('Failed to authenticate:', err)
@@ -111,27 +122,26 @@ document.getElementById('bauth')?.addEventListener('click', () => {
   )
 })
 
-
 document.getElementById('updateProfile')?.addEventListener('click', async () => {
   // @ts-ignore
-  document.getElementById('profileloading')?.style?.display = 'block';
+  document.getElementById('profileloading')?.style?.display = 'block'
   await updateProfile()
   // @ts-ignore
-  document.getElementById('profileloading')?.style?.display = 'none';
+  document.getElementById('profileloading')?.style?.display = 'none'
 })
 
 document.getElementById('loadNotes')?.addEventListener('click', async () => {
   // @ts-ignore
-  document.getElementById('loadloading')?.style?.display = 'block';
+  document.getElementById('loadloading')?.style?.display = 'block'
   await loadNotes()
   // @ts-ignore
-  document.getElementById('loadloading')?.style?.display = 'none';
+  document.getElementById('loadloading')?.style?.display = 'none'
 })
 
 document.getElementById('createNote')?.addEventListener('click', async () => {
   // @ts-ignore
-  document.getElementById('createloading')?.style?.display = 'block';
+  document.getElementById('createloading')?.style?.display = 'block'
   await createNote()
   // @ts-ignore
-  document.getElementById('createloading')?.style?.display = 'none';
+  document.getElementById('createloading')?.style?.display = 'none'
 })
